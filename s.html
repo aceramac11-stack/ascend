@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lovele - Valentine's Wordle</title>
+    <style>
+        body { 
+            font-family: 'Comic Sans MS', cursive, sans-serif; 
+            text-align: center; 
+            background: linear-gradient(45deg, #ff69b4, #ffb6c1, #ff1493, #dc143c); 
+            background-size: 400% 400%; 
+            animation: gradientShift 5s ease infinite; 
+            color: white; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        @keyframes gradientShift { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
+        }
+        h1 { 
+            font-size: 3em; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+            margin-bottom: 10px; 
+        }
+        p { 
+            font-size: 1.2em; 
+            margin-bottom: 20px; 
+        }
+        #game { 
+            margin: 20px auto; 
+            width: 420px; /* Adjusted for 7 cells */
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .row { 
+            display: flex; 
+            margin: 5px; 
+            animation: fadeIn 0.5s ease-in; 
+        }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        .cell { 
+            width: 55px; 
+            height: 55px; 
+            border: 3px solid #fff; 
+            border-radius: 10px; 
+            margin: 2px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 24px; 
+            font-weight: bold; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+        }
+        .cell:hover { 
+            transform: scale(1.05); 
+        }
+        .correct { 
+            background: linear-gradient(45deg, #4CAF50, #66BB6A); 
+            color: white; 
+            animation: bounce 0.5s; 
+        }
+        .present { 
+            background: linear-gradient(45deg, #FFC107, #FFEB3B); 
+            color: black; 
+        }
+        .absent { 
+            background: linear-gradient(45deg, #9E9E9E, #BDBDBD); 
+            color: white; 
+        }
+        @keyframes bounce { 
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 
+            40% { transform: translateY(-10px); } 
+            60% { transform: translateY(-5px); } 
+        }
+        input { 
+            margin: 10px; 
+            padding: 10px; 
+            font-size: 18px; 
+            border: 2px solid #fff; 
+            border-radius: 25px; 
+            background: rgba(255,255,255,0.8); 
+            color: #333; 
+            text-align: center; 
+            width: 200px; 
+            transition: all 0.3s ease; 
+        }
+        input:focus { 
+            outline: none; 
+            box-shadow: 0 0 10px rgba(255,105,180,0.8); 
+            transform: scale(1.05); 
+        }
+        #message { 
+            margin: 20px; 
+            font-size: 20px; 
+            font-weight: bold; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
+        }
+        #win { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(255, 105, 180, 0.95); 
+            z-index: 10; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            animation: confetti 2s infinite; 
+        }
+        @keyframes confetti { 
+            0% { background-position: 0 0; } 
+            100% { background-position: 100px 100px; } 
+        }
+        #win h1 { 
+            font-size: 4em; 
+            color: #fff; 
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7); 
+            animation: pulse 1s infinite; 
+        }
+        @keyframes pulse { 
+            0% { transform: scale(1); } 
+            50% { transform: scale(1.1); } 
+            100% { transform: scale(1); } 
+        }
+        .heart { 
+            font-size: 60px; 
+            animation: float 2s infinite ease-in-out; 
+        }
+        @keyframes float { 
+            0%, 100% { transform: translateY(0) rotate(0deg); } 
+            25% { transform: translateY(-20px) rotate(5deg); } 
+            50% { transform: translateY(0) rotate(0deg); } 
+            75% { transform: translateY(-10px) rotate(-5deg); } 
+        }
+        .hearts { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            pointer-events: none; 
+            overflow: hidden; 
+        }
+        .hearts div { 
+            position: absolute; 
+            font-size: 30px; 
+            animation: fall 5s linear infinite; 
+        }
+        @keyframes fall { 
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; } 
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } 
+        }
+        .letter { 
+            width: 250px; 
+            height: 180px; 
+            background: linear-gradient(45deg, #fff, #ffe4e1); 
+            border: 3px solid #ff69b4; 
+            border-radius: 15px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 40px; 
+            cursor: pointer; 
+            transition: all 0.5s ease; 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3); 
+            position: relative; 
+            margin: 20px; 
+            perspective: 1000px; 
+            opacity: 0; 
+            transform: scale(0); 
+            animation: popIn 0.8s ease-out forwards; 
+        }
+        @keyframes popIn { 
+            0% { opacity: 0; transform: scale(0) rotate(0deg); } 
+            50% { opacity: 1; transform: scale(1.2) rotate(10deg); } 
+            100% { opacity: 1; transform: scale(1) rotate(0deg); } 
+        }
+        .letter:hover { 
+            transform: scale(1.1) rotate(2deg); 
+        }
+        .letter.open { 
+            transform: rotateY(180deg); 
+        }
+        .letter-front { 
+            position: absolute; 
+            backface-visibility: hidden; 
+        }
+        .letter-back { 
+            position: absolute; 
+            backface-visibility: hidden; 
+            transform: rotateY(180deg); 
+            padding: 20px; 
+            font-size: 16px; 
+            color: #333; 
+            text-align: center; 
+            opacity: 0; 
+            transition: opacity 0.5s ease 0.5s; 
+            line-height: 1.5; 
+        }
+        .letter.open .letter-back { 
+            opacity: 1; 
+        }
+        .message { 
+            display: none; 
+            font-size: 24px; 
+            color: #fff; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+            margin-top: 20px; 
+            animation: fadeInMessage 1s ease-in-out; 
+            cursor: pointer; 
+            padding: 10px 20px; 
+            border: 2px solid #fff; 
+            border-radius: 25px; 
+            background: rgba(255,255,255,0.2); 
+            transition: all 0.3s ease; 
+        }
+        .message:hover { 
+            background: rgba(255,255,255,0.4); 
+            transform: scale(1.05); 
+        }
+        @keyframes fadeInMessage { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        .sparkles { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            pointer-events: none; 
+            overflow: hidden; 
+        }
+        .sparkles div { 
+            position: absolute; 
+            font-size: 20px; 
+            animation: sparkle 3s linear infinite; 
+        }
+        @keyframes sparkle { 
+            0% { transform: translateY(100vh) scale(0); opacity: 1; } 
+            50% { transform: translateY(50vh) scale(1); opacity: 0.8; } 
+            100% { transform: translateY(0) scale(0); opacity: 0; } 
+        }
+    </style>
+</head>
+<body>
+    <h1>Lovele 💖</h1>
+    <p>Guess the 7-letter Valentine's word!</p>
+    <div id="game"></div>
+    <input type="text" id="guess" maxlength="7" placeholder="Enter word">
+    <div id="message"></div>
+    <div id="win">
+        <div class="hearts" id="heartsContainer"></div>
+        <div class="sparkles" id="sparklesContainer"></div>
+        <h1>You Won! 🎉</h1>
+        <div class="heart">❤️</div>
+        <div class="letter" id="loveLetter" style="display: none;">
+            <div class="letter-front">💌</div>
+            <div class="letter-back">
+                Dear Shiekha,<br><br>
+                Happy Valentine's Day, my extraordinary love! 🎉 You've just unlocked the most magical surprise – a letter straight from my heart! 🌟 You're not just adorable; you're a dazzling star that lights up my world every single day. Your smile is like a burst of fireworks, your kindness is endless, and your beauty is breathtaking. May this Valentine's Day bring you chocolates that melt in your mouth, roses that never wilt, and moments filled with pure joy and romance. You've captured my heart forever, and I'm amazed by you every day! 💖✨<br><br>
+                Forever yours,<br>
+                Your Secret Admirer 💕
+            </div>
+        </div>
+        <div class="message" id="revealMessage">Click here for a special Valentine's surprise! 📬✨</div>
+    </div>
+    <script>
+        const words = ['SHIEKHA']; // Fixed to the requested word
+        let target = words[0]; // Always "SHIEKHA"
+        let attempts = 0;
+        const maxAttempts = 6;
+        const gameDiv = document.getElementById('game');
+        const input = document.getElementById('guess');
+        const message = document.getElementById('message');
+        const winDiv = document.getElementById('win');
+        const heartsContainer = document.getElementById('heartsContainer');
+        const sparklesContainer = document.getElementById('sparklesContainer');
+        const loveLetter = document.getElementById('loveLetter');
+        const revealMessage = document.getElementById('revealMessage');
+
+        function createBoard() {
+            for (let i = 0; i < maxAttempts; i++) {
+                const row = document.createElement('div');
+                row.className = 'row';
+                for (let j = 0; j < 7; j++) { // Changed to 7 cells
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    row.appendChild(cell);
+                }
+                gameDiv.appendChild(row);
+            }
+        }
+
+        function checkGuess(guess) {
+            if (guess.length !== 7 || !/^[A-Z]+$/.test(guess)) {
+                message.textContent = 'Enter a valid 7-letter word!';
+                return;
+            }
+            const row = gameDiv.children[attempts];
+            const cells = row.children;
+            let correct = 0;
+            const targetLetters = target.split('');
+            const guessLetters = guess.split('');
+            const feedback = Array(7).fill('absent'); // Changed to 7
+
+            // First pass: correct positions
+            for (let i = 0; i < 7; i++) {
+                if (guessLetters[i] === targetLetters[i]) {
+                    feedback[i] = 'correct';
+                    targetLetters[i] = null;
+                    correct++;
+                }
+            }
+            // Second pass: present
+            for (let i = 0; i < 7; i++) {
+                if (feedback[i] === 'absent' && targetLetters.includes(guessLetters[i])) {
+                    feedback[i] = 'present';
+                    targetLetters[targetLetters.indexOf(guessLetters[i])] = null;
+                }
+            }
+            // Update cells
+            for (let i = 0; i < 7; i++) {
+                cells[i].textContent = guessLetters[i];
+                cells[i].classList.add(feedback[i]);
+            }
+            attempts++;
+            if (correct === 7) {
+                message.textContent = 'You guessed it!';
+                winDiv.style.display = 'flex';
+                createHearts(); // Add falling hearts on win
+                createSparkles(); // Add sparkles for amazement
+                revealMessage.style.display = 'block'; // Show clickable message
+            } else if (attempts === maxAttempts) {
+                message.textContent = `Out of tries! The word was ${target}.`;
+            } else {
+                message.textContent = '';
+            }
+        }
+
+        function createHearts() {
+            for (let i = 0; i < 50; i++) { // Create 50 falling hearts
+                const heart = document.createElement('div');
+                heart.textContent = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        function createSparkles() {
+            const sparkles = ['✨', '🌟', '💫', '⭐'];
+            for (let i = 0; i < 30; i++) { // Create 30 sparkles
+                const sparkle = document.createElement('div');
+                sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                sparklesContainer.appendChild(sparkle);
+            }
+        }
+
+        revealMessage.addEventListener('click', () => {
+            revealMessage.style.display = 'none'; // Hide the click prompt
+            loveLetter.style.display = 'flex'; // Show the letter with pop animation
+        });
+
+        loveLetter.addEventListener('click', () => {
+            loveLetter.classList.add('open');
+        });
+
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkGuess(input.value.toUpperCase());
+                input.value = '';
+            }
+        });
+
+        createBoard();
+    </script>
+</body>
+</html>

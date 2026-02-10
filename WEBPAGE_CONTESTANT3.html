@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PanDelight - Discover Pandi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --primary-blue: #0033A0; /* Kept original for strong branding */
+    --primary-blue-light: #1E40AF; /* Softer blue for hovers and accents */
+    --primary-red: #CE1126;
+    --accent-yellow: #E6C914; /* Darkened for better contrast */
+    --neutral-light: #F0F4F8; /* New: Soft neutral for balance and glass effects */
+    --secondary-bg: #f8f9fa;
+    --text-dark: #333;
+    --text-light: #fff;
+    --glass-bg: rgba(255, 255, 255, 0.15); /* Slightly more opaque for elegance */
+    --glass-border: rgba(255, 255, 255, 0.25);
+    --shadow: 0 6px 25px rgba(0, 0, 0, 0.15); /* Softer, more refined shadow */
+    --glow: 0 0 15px rgba(230, 201, 20, 0.4); /* New: Subtle yellow glow for highlights */
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, var(--secondary-bg) 0%, #e9ecef 100%);
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    background-image: url('pp.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    padding-top: 120px;
+    transition: padding-left 0.3s ease;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25); /* Slightly lighter for better image visibility */
+    z-index: -1;
+}
+
+body.sitemap-open {
+    padding-left: 250px;
+}
+
+@media (max-width: 768px) {
+    body.sitemap-open {
+        padding-left: 200px;
+    }
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 50%, var(--primary-red) 100%); /* Smoother gradient */
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+}
+
+header h1 {
+    margin: 0;
+    color: var(--accent-yellow);
+    font-size: 2.2em;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7); /* Enhanced for depth */
+}
+
+header h1 i {
+    margin-right: 10px;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: var(--text-light);
+    font-size: 1em;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+nav a:hover {
+    color: var(--accent-yellow);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: var(--glow); /* Subtle glow on hover */
+}
+
+nav a.active {
+    color: var(--accent-yellow);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: var(--glow);
+}
+
+nav a i {
+    margin-right: 8px;
+}
+
+.cart-icon {
+    position: relative;
+    margin-left: 20px;
+    color: var(--text-light);
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.cart-icon:hover {
+    color: var(--accent-yellow);
+    text-shadow: var(--glow);
+}
+
+.cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--accent-yellow);
+    color: var(--primary-blue);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+/* Hero Carousel */
+.hero {
+    position: relative;
+    height: 70vh;
+    border-radius: 30px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Deeper shadow for drama */
+    overflow: hidden;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.carousel {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.slide {
+    min-width: 100%;
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Slightly darker for better text contrast */
+    z-index: 1;
+}
+
+.slide div {
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 600px;
+    box-shadow: var(--shadow);
+}
+
+.slide h2 {
+    color: var(--accent-yellow);
+    margin-bottom: 15px;
+    font-weight: 700;
+    font-size: 2.5em;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.9); /* Stronger shadow */
+    font-family: 'Playfair Display', serif;
+}
+
+.slide p {
+    color: var(--text-light);
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+.tab {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    margin: 0 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.tab:hover {
+    background: var(--accent-yellow);
+    transform: scale(1.2);
+    box-shadow: var(--glow);
+}
+
+.tab.active {
+    background: var(--accent-yellow);
+    border-color: var(--primary-blue);
+    box-shadow: var(--glow);
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px; /* Slightly larger for elegance */
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 50%, var(--primary-red) 100%);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.5s ease;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: var(--shadow);
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), var(--glow);
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: var(--primary-blue);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+}
+
+.arrow:hover {
+    background: var(--accent-yellow);
+    color: var(--text-light);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: var(--glow);
+}
+
+.arrow.left {
+    left: 20px;
+}
+
+.arrow.right {
+    right: 20px;
+}
+
+/* Product Section */
+.products {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.products h2 {
+    text-align: center;
+    color: var(--accent-yellow);
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.9);
+    font-weight: 700;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    font-family: 'Playfair Display', serif;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.product-card {
+    background: var(--glass-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(15px); /* Stronger blur for premium feel */
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px var(--accent-yellow), var(--glow);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.product-image:hover {
+    transform: scale(1.05);
+}
+
+.product-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.product-name {
+    color: var(--accent-yellow);
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+}
+
+.product-price {
+    color: var(--text-light);
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Heritage Section */
+.heritage {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.heritage h2 {
+    text-align: center;
+    color: var(--accent-yellow);
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.9);
+    font-weight: 700;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    font-family: 'Playfair Display', serif;
+}
+
+.heritage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.heritage-card {
+    background: var(--glass-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(15px);
+}
+
+.heritage-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px var(--accent-yellow), var(--glow);
+}
+
+.heritage-image {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.heritage-image:hover {
+    transform: scale(1.05);
+}
+
+.heritage-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.heritage-name {
+    color: var(--accent-yellow);
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Tourism Section */
+.tourism {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tourism h2 {
+    text-align: center;
+    color: var(--accent-yellow);
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.9);
+    font-weight: 700;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    font-family: 'Playfair Display', serif;
+}
+
+.tourism-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.tourism-card {
+    background: var(--glass-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(15px);
+}
+
+.tourism-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px var(--accent-yellow), var(--glow);
+}
+
+.tourism-image {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.tourism-image:hover {
+    transform: scale(1.05);
+}
+
+.tourism-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.tourism-name {
+    color: var(--accent-yellow);
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Catalog Section */
+.catalog {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.catalog h2 {
+    text-align: center;
+    color: var(--accent-yellow);
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.9);
+    font-weight: 700;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    font-family: 'Playfair Display', serif;
+}
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.catalog-card {
+    background: var(--glass-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(15px);
+}
+
+.catalog-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px var(--accent-yellow), var(--glow);
+}
+
+.catalog-image {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+.catalog-image:hover {
+    transform: scale(1.05);
+}
+
+.catalog-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.catalog-name {
+    color: var(--accent-yellow);
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.catalog-type {
+    color: var(--text-light);
+    font-size: 0.9em;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Find Us Section */
+.findus {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.findus h2 {
+    text-align: center;
+    color: var(--accent-yellow);
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.9);
+    font-weight: 700;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    font-family: 'Playfair Display', serif;
+}
+
+.findus-content {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1.2em;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* About Us Section */
+.aboutus {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.aboutus h2 {
+    text-align: center;
+    color: var(--accent-yellow);
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.9);
+    font-weight: 700;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    font-family: 'Playfair Display', serif;
+}
+
+.aboutus-content {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1.2em;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: var(--text-light);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: var(--shadow);
+}
+
+.close {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    color: var(--text-dark);
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: var(--primary-red);
+}
+
+.modal-image {
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.modal h3 {
+    color: var(--accent-yellow);
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.modal p {
+    color: var(--text-light);
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.quantity button {
+    background: var(--primary-blue);
+    color: var(--text-light);
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin: 0 10px;
+}
+
+.quantity span {
+    font-weight: 600;
+    min-width: 30px;
+    text-align: center;
+}
+
+.add-to-cart {
+    background: var(--accent-yellow);
+    color: var(--primary-blue);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.5s ease;
+}
+
+.add-to-cart:hover {
+    background: #d4b812; /* Slightly darker yellow for hover */
+}
+
+/* Cart Modal */
+.cart-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    overflow-y: auto;
+}
+
+.cart-content {
+    background-color: var(--text-light);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: var(--shadow);
+}
+
+.cart-content h3 {
+    color: var(--accent-yellow);
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-total {
+    font-weight: 700;
+    font-size: 1.2em;
+    margin-top: 20px;
+    text-align: center;
+    color: var(--accent-yellow);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.checkout-btn {
+    background: var(--accent-yellow);
+    color: var(--primary-blue);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 20px;
+    width: 100%;
+    transition: background 0.3s ease;
+}
+
+.checkout-btn:hover {
+    background: #d4b812;
+}
+
+/* Footer */
+footer {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 50%, var(--primary-red) 100%);
+    color: var(--text-light);
+    text-align: center;
+    padding: 20px;
+    margin-top: 60px;
+}
+
+footer p {
+    margin: 0;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Expandable Sitemap Sidebar */
+.sitemap {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2000;
+    height: 100%;
+    width: 250px;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 50%, var(--primary-red) 100%);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1500;
+    padding: 20px;
+    box-shadow: var(--shadow);
+}
+
+.sitemap.open {
+    transform: translateX(0);
+}
+
+.sitemap-toggle {
+    position: fixed;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--accent-yellow);
+    color: var(--primary-blue);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5em;
+    z-index: 1600;
+    box-shadow: var(--shadow);
+}
+
+.sitemap-toggle:hover {
+    background: #d4b812;
+    box-shadow: var(--glow);
+}
+
+.sitemap nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sitemap nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.sitemap nav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sitemap .search-bar {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.sitemap .search-bar input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+.sitemap .search-bar button {
+    margin-left: 0px;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+    background: var(--accent-yellow);
+    color: var(--primary-blue);
+    cursor: pointer;
+}
+
+.sitemap .search-bar button:hover {
+    background: #d4b812;
+}
+
+/* AI Assistant */
+.ai-assistant {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background: var(--text-light);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    display: none;
+    flex-direction: column;
+    z-index: 1700;
+}
+
+.ai-assistant.open {
+    display: flex;
+}
+
+.ai-header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 50%, var(--primary-red) 100%);
+    color: var(--text-light);
+    padding: 10px;
+    border-radius: 15px 15px 0 0;
+    text-align: center;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ai-header .close {
+    color: var(--text-light);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.ai-chat {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background: var(--secondary-bg);
+}
+
+.ai-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #eee;
+}
+
+.ai-input input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.ai-input button {
+    margin-left: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: var(--accent-yellow);
+    color: var(--primary-blue);
+    cursor: pointer;
+}
+
+.ai-input button:hover {
+    background: #d4b812;
+}
+
+.ai-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--accent-yellow);
+    color: var(--primary-blue);
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5em;
+    z-index: 1800;
+    box-shadow: var(--shadow);
+}
+
+.ai-toggle:hover {
+    background: #d4b812;
+    box-shadow: var(--glow);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 10px 20px;
+    }
+    nav {
+        margin-top: 10px;
+        gap: 15px;
+    }
+    .hero {
+        height: 50vh;
+        margin: 10px;
+    }
+    .slide div {
+        padding: 20px;
+    }
+    .slide h2 {
+        font-size: 2em;
+    }
+    .slide p {
+        font-size: 1em;
+    }
+    .arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+    }
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+    .heritage-grid {
+        grid-template-columns: 1fr;
+    }
+    .tourism-grid {
+        grid-template-columns: 1fr;
+    }
+    .catalog-grid {
+        grid-template-columns: 1fr;
+    }
+    .modal-content {
+        margin: 10% auto;
+        padding: 20px;
+        width: 95%;
+    }
+    .cart-content {
+        margin: 10% auto;
+        padding: 20px;
+        width: 95%;
+    }
+    .sitemap {
+        width: 200px;
+    }
+    .ai-assistant {
+        width: 250px;
+        height: 300px;
+    }
+}
+
+.sitemap-toggle,
+.ai-toggle {
+    transition: all 0.3s ease;
+}
+
+/* Move sitemap toggle when sitemap opens */
+.sitemap.open ~ .sitemap-toggle {
+    left: 260px;
+}
+
+/* Move AI toggle when AI assistant opens */
+.ai-assistant.open ~ .ai-toggle {
+    right: 340px;
+}
+
+/* Find Us & Contact Us section backgrounds */
+#find-us,
+#contact-us {
+    position: relative;
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.65),
+        rgba(0, 0, 0, 0.65)
+    ),
+    url("assets/images/pandi-bg.jpg") center/cover no-repeat;
+    border-radius: 20px;
+    padding: 80px 60px;
+    margin: 80px auto;
+    max-width: 1200px;
+}
+
+/* Glass feel inside */
+#find-us > *,
+#contact-us > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Highlight found content */
+.search-hit {
+    outline: 2px solid var(--accent-yellow);
+    background: rgba(255, 215, 0, 0.15);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+html, body {
+    overflow-x: hidden;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --secondary-bg: #1a1a1a;
+        --text-dark: #e0e0e0;
+        --text-light: #333;
+        --glass-bg: rgba(0, 0, 0, 0.2);
+        --glass-border: rgba(255, 255, 255, 0.1);
+    }
+    body {
+        background: linear-gradient(135deg, var(--secondary-bg) 0%, #2a2a2a 100%);
+    }
+    body::before {
+        background: rgba(0, 0, 0, 0.15);
+    }
+}
+/* Add this to your CSS */
+
+/* Header adjustment when sitemap is open */
+header.sitemap-open {
+    left: 250px;
+    width: calc(100% - 250px);
+    transition: left 0.3s ease, width 0.3s ease;
+}
+
+/* Mobile adjustment */
+@media (max-width: 768px) {
+    header.sitemap-open {
+        left: 200px;
+        width: calc(100% - 200px);
+    }
+}
+	  </style>
+	  </head> <body>
+	  <div class="sitemap" id="sitemap"> <div class="search-bar"> <input type="text" id="sitemap-search-input" placeholder="Search..."> <button id="sitemap-search-button"><i class="fas fa-search"></i></button> </div> <nav> <a href="#home"><i class="fas fa-home"></i> Home</a> <a href="#products"><i class="fas fa-box"></i> Products</a> <a href="#heritage"><i class="fas fa-landmark"></i> Heritage</a> <a href="#tourism"><i class="fas fa-globe"></i> Tourism</a> <a href="#catalog"><i class="fas fa-book"></i> Catalog</a> <a href="#findus"><i class="fas fa-map-marker-alt"></i> Find Us</a> <a href="#aboutus"><i class="fas fa-info-circle"></i> About Us</a> </nav> </div> <button class="sitemap-toggle" id="sitemap-toggle"><i class="fas fa-bars"></i></button> <div id="page-wrapper">
+
+
+<!-- AI Assistant -->
+<div class="ai-assistant" id="ai-assistant">
+    <div class="ai-header">
+        Ace - Your AI Assistant
+        <span class="close" onclick="closeAI()">&times;</span>
+    </div>
+    <div class="ai-chat" id="ai-chat">
+        <p>Hello! I'm Ace, your AI assistant for PanDelight. How can I help you today?</p>
+    </div>
+    <div class="ai-input">
+        <input type="text" id="ai-input" placeholder="Ask me anything...">
+        <button id="ai-send"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+<button class="ai-toggle" id="ai-toggle"><i class="fas fa-robot"></i></button>
+
+<header>
+    <h1><i class="fas fa-lightbulb"></i> PanDelight</h1>
+    <nav>
+        <a href="#home" class="active"><i class="fas fa-home"></i> Home</a>
+        <a href="#products"><i class="fas fa-box"></i> Products</a>
+        <a href="#heritage"><i class="fas fa-landmark"></i> Heritage</a>
+        <a href="#tourism"><i class="fas fa-globe"></i> Tourism</a>
+        <a href="#catalog"><i class="fas fa-book"></i> Catalog</a>
+        <a href="#findus"><i class="fas fa-map-marker-alt"></i> Find Us</a>
+        <a href="#aboutus"><i class="fas fa-info-circle"></i> About Us</a>
+    </nav>
+    <div class="cart-icon" onclick="openCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cart-count">0</span>
+    </div>
+</header>
+
+<main>
+    <section class="hero" id="home">
+        <div class="carousel" id="carousel">
+            <div class="slide" style="background-image: url('p.jpg');">
+                <div>
+                    <h2>Welcome to PanDelight</h2>
+                    <p>Discover the heart of Pandi – where tradition meets innovation. Explore local products, rich heritage, stunning tourism spots, and our curated catalog.</p>
+                    <a href="#products" class="btn">Explore Now</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('zz.jpg');">
+                <div>
+                    <h2>Authentic Local Products</h2>
+                    <p>From handcrafted goods to fresh produce, find unique items that capture Pandi's essence.</p>
+                    <a href="#products" class="btn">View Products</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('y.jpg');">
+                <div>
+                    <h2>Cultural Heritage</h2>
+                    <p>Immerse yourself in Pandi's rich history and traditions that have shaped its identity.</p>
+                    <a href="#heritage" class="btn">Learn More</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('q.jpg');">
+                <div>
+                    <h2>Tourism Highlights</h2>
+                    <p>Plan your adventure to Pandi's breathtaking landscapes and hidden gems.</p>
+                    <a href="#tourism" class="btn">Explore Tourism</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('t.jpg');">
+                <div>
+                    <h2>Curated Catalog</h2>
+                    <p>Browse our exclusive collection of Pandi's finest offerings.</p>
+                    <a href="#catalog" class="btn">View Catalog</a>
+                </div>
+            </div>
+        </div>
+        <div class="tabs">
+            <div class="tab active" onclick="changeSlide(0)"></div>
+            <div class="tab" onclick="changeSlide(1)"></div>
+            <div class="tab" onclick="changeSlide(2)"></div>
+            <div class="tab" onclick="changeSlide(3)"></div>
+            <div class="tab" onclick="changeSlide(4)"></div>
+        </div>
+        <button class="arrow left" onclick="prevSlide()">❮</button> <button class="arrow right" onclick="nextSlide()">❯</button> </section>
+
+
+
+    <section class="products" id="products">
+        <h2>Local Products</h2>
+        <div class="product-grid">
+            <div class="product-card" onclick="openModal(0)">
+                <div class="product-image" style="background-image: url('hh.jpg');"></div>
+                <div class="product-content">
+                    <h3 class="product-name" onclick="openModal(0)">Suits</h3>
+                    <p class="product-price">₱1,500.00</p>
+                </div>
+            </div>
+            <div class="product-card" onclick="openModal(1)">
+                <div class="product-image" style="background-image: url('rr.jpg');"></div>
+                <div class="product-content">
+                    <h3 class="product-name" onclick="openModal(1)">Chickens</h3>
+                    <p class="product-price">₱250.00</p>
+                </div>
+            </div>
+            <div class="product-card" onclick="openModal(2)">
+                <div class="product-image" style="background-image: url('bb.jpg');"></div>
+                <div class="product-content">
+                    <h3 class="product-name" onclick="openModal(2)">Rice Sacks</h3>
+                    <p class="product-price">₱1,200.00</p>
+                </div>
+            </div>
+            <div class="product-card" onclick="openModal(3)">
+                <div class="product-image" style="background-image: url('vv.jpg');"></div>
+                <div class="product-content">
+                    <h3 class="product-name" onclick="openModal(3)">Pan de Coco</h3>
+                    <p class="product-price">₱50.00</p>
+                </div>
+            </div>
+            <div class="product-card" onclick="openModal(4)">
+                <div class="product-image" style="background-image: url('xx.jpg');"></div>
+                <div class="product-content">
+                    <h3 class="product-name" onclick="openModal(4)">Gowns</h3>
+                    <p class="product-price">₱2,000.00</p>
+                </div>
+            </div>
+            <div class="product-card" onclick="openModal(5)">
+                <div class="product-image" style="background-image: url('cc.jpg');"></div>
+                <div class="product-content">
+                    <h3 class="product-name" onclick="openModal(5)">Handwoven Barongs</h3>
+                    <p class="product-price">₱800.00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="heritage" id="heritage">
+        <h2>Cultural Heritage</h2>
+        <div class="heritage-grid">
+            <div class="heritage-card" onclick="openHeritageModal(0)">
+                <div class="heritage-image" style="background-image: url('p.jpg');"></div>
+                <div class="heritage-content">
+                    <h3 class="heritage-name">Immaculate Conception Parish</h3>
+                </div>
+            </div>
+            <div class="heritage-card" onclick="openHeritageModal(1)">
+                <div class="heritage-image" style="background-image: url('y.jpg');"></div>
+                <div class="heritage-content">
+                    <h3 class="heritage-name">Inang Filipina Shrine</h3>
+                </div>
+            </div>
+            <div class="heritage-card" onclick="openHeritageModal(2)">
+                <div class="heritage-image" style="background-image: url('t.jpg');"></div>
+                <div class="heritage-content">
+                    <h3 class="heritage-name">Kakarong De Sili</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tourism" id="tourism">
+        <h2>Tourism Highlights</h2>
+        <div class="tourism-grid">
+            <div class="tourism-card" onclick="openTourismModal(0)">
+                <div class="tourism-image" style="background-image: url('q.jpg');"></div>
+                <div class="tourism-content">
+                    <h3 class="tourism-name">Amana Waterpark</h3>
+                </div>
+            </div>
+            <div class="tourism-card" onclick="openTourismModal(1)">
+                <div class="tourism-image" style="background-image: url('r.jpg');"></div>
+                <div class="tourism-content">
+                    <h3 class="tourism-name">Sitio Antonio Wavepool Resort</h3>
+                </div>
+            </div>
+            <div class="tourism-card" onclick="openTourismModal(2)">
+                <div class="tourism-image" style="background-image: url('j.jpg');"></div>
+                <div class="tourism-content">
+                    <h3 class="tourism-name">La Camila Private Pool & Events Place</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="catalog" id="catalog">
+        <h2>Curated Catalog</h2>
+        <div class="catalog-grid">
+            <!-- Products -->
+            <div class="catalog-card" onclick="openModal(0)">
+                <div class="catalog-image" style="background-image: url('hh.jpg');"></div>
+                <div class="catalog-content">
+                    <h3 class="catalog-name">Suits</h3>
+                    <p class="catalog-type">Product - ₱1,500.00</p>
+                </div>
+            </div>
+            <div class="catalog-card" onclick="openModal(1)">
+                <div class="catalog-image" style="background-image: url('rr.jpg');"></div>
+                <div class="catalog-content">
+                    <h3 class="catalog-name">Chickens</h3>
+                    <p class="catalog-type">Product - ₱250.00</p>
+                </div>
+            </div>
+            <div class="catalog-card" onclick="openModal(2)">
+                <div class="catalog-image" style="background-image: url('bb.jpg');"></div>
+                <div class="catalog-content">
+                    <h3 class="catalog-name">Rice Sacks</h3>
+                    <p class="catalog-type">Product - ₱1,200.00</p>
+                </div>
+            </div>
+            <div class="catalog-card" onclick="openModal(3)">
+                <div class="catalog-image" style="background-image: url('vv.jpg');"></div>
+                <div class="catalog-content">
+                    <h3 class="catalog-name">Pan de Coco</h3>
+                    <p class="catalog-type">Product - ₱50.00</p>
+                </div>
+            </div>
+            <div class="catalog-card" onclick="openModal(4)">
+                <div class="catalog-image" style="background-image: url('xx.jpg');"></div>
+                <div class="catalog-content">
+                    <h3 class="catalog-name">Gowns</h3>
+                    <p class="catalog-type">Product - ₱2,000.00</p>
+                </div>
+            </div>
+            <div class="catalog-card" onclick="openModal(5)">
+                <div class="catalog-image" style="background-image: url('cc.jpg');"></div>
+                <div class="catalog-content">
+                    <h3 class="catalog-name">Handwoven Barongs</h3>
+                    <p class="catalog-type">Product - ₱800.00</p>
+                </div>
+            </div>
+            <!-- Heritage -->
+            <div class="catalog-card" onclick="openHeritageModal(0)">
+                <div class="catalog-image" style="background-image: url('p.jpg');"></div>
+                <div class="catalog-content">
+                    <h3 class="catalog-name">Immaculate Conception Parish</h3>
+                    <p class="catalog-type">Heritage Site</p>
+                </div>
+            </div>
+            <div class="catalog-card" onclick="openHeritageModal(1)">
+                <div class="catalog-image" style="background-image: url('y.jpg');"></div>
+                <div class="catalog-content">
+                    <h3 class="catalog-name">Inang Filipina Shrine</h3>
+                    <p class="catalog-type">Heritage Site</p>
+                </div>
+            </div>
+            <div class="catalog-card" onclick="openHeritageModal(2)">
+                <div class="catalog-image" style="background-image: url('t.jpg');"></div>
+                <div class="catalog-content">
+                    <h3 class="catalog-name">Kakarong De Sili</h3>
+                    <p class="catalog-type">Heritage Site</p>
+                </div>
+            </div>
+            <!-- Tourism -->
+            <div class="catalog-card" onclick="openTourismModal(0)">
+                <div class="catalog-image" style="background-image: url('q.jpg');"></div>
+                <div class="catalog-content">
+                    <h3 class="catalog-name">Amana Waterpark</h3>
+                    <p class="catalog-type">Tourism Spot</p>
+                </div>
+            </div>
+            <div class="catalog-card" onclick="openTourismModal(1)">
+                <div class="catalog-image" style="background-image: url('r.jpg');"></div>
+                <div class="catalog-content">
+                    <h3 class="catalog-name">Sitio Antonio Wavepool Resort</h3>
+                    <p class="catalog-type">Tourism Spot</p>
+                </div>
+            </div>
+            <div class="catalog-card" onclick="openTourismModal(2)">
+                <div class="catalog-image" style="background-image: url('j.jpg');"></div>
+                <div class="catalog-content">
+                    <h3 class="catalog-name">La Camila Private Pool & Events Place</h3>
+                    <p class="catalog-type">Tourism Spot</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="findus" id="findus">
+        <h2>Find Us</h2>
+        <div class="findus-content">
+            <p>Located in the heart of Pandi, Bulacan. Visit us at our physical store or explore our online presence.</p>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.1234567890123!2d120.9833!3d14.8667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c1234567890%3A0xabcdef123456!2sPandi%2C%20Bulacan!5e0!3m2!1sen!2sph!4v1234567890123!5m2!1sen!2sph" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section class="aboutus" id="aboutus">
+        <h2>About Us</h2>
+        <div class="aboutus-content">
+            <p>PanDelight is dedicated to showcasing the beauty and culture of Pandi. We offer authentic local products, promote cultural heritage, and highlight tourism opportunities to connect you with the essence of Pandi.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Product Modal -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="modal-image" class="modal-image"></div>
+        <h3 id="modal-name"></h3>
+        <p id="modal-description"></p>
+        <div class="quantity">
+            <button onclick="changeQuantity(-1)">-</button>
+            <span id="quantity">1</span>
+            <button onclick="changeQuantity(1)">+</button>
+        </div>
+        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+    </div>
+</div>
+
+<!-- Heritage Modal -->
+<div id="heritageModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeHeritageModal()">&times;</span>
+        <div id="heritage-modal-image" class="modal-image"></div>
+        <h3 id="heritage-modal-name"></h3>
+        <p id="heritage-modal-description"></p>
+    </div>
+</div>
+
+<!-- Tourism Modal -->
+<div id="tourismModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeTourismModal()">&times;</span>
+        <div id="tourism-modal-image" class="modal-image"></div>
+        <h3 id="tourism-modal-name"></h3>
+        <p id="tourism-modal-description"></p>
+    </div>
+</div>
+
+<!-- Cart Modal -->
+<div id="cartModal" class="cart-modal">
+    <div class="cart-content">
+        <span class="close" onclick="closeCart()">&times;</span>
+        <h3>Your Cart</h3>
+        <div id="cart-items"></div>
+        <div class="cart-total">Total: ₱<span id="cart-total">0.00</span></div>
+        <button class="checkout-btn" onclick="checkout()">Checkout</button>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 PanDelight. All Rights Reserved. | Discover Pandi with Pride</p>
+</footer>
+</div>
+<script>
+const products = [
+    { name: "Handwoven Barongs", price: 1500.00, image: "hh.jpg", description: "Traditional handwoven barongs made from fine fabrics, perfect for formal occasions." },
+    { name: "Chickens", price: 250.00, image: "rr.jpg", description: "Fresh, locally raised chickens, ideal for home cooking or special meals." },
+    { name: "Rice Sacks", price: 1200.00, image: "bb.jpg", description: "High-quality rice sacks filled with premium grains from Pandi's farms." },
+    { name: "Pan de Coco", price: 50.00, image: "vv.jpg", description: "Delicious coconut bread, a sweet treat made with fresh coconut." },
+    { name: "Gowns", price: 2000.00, image: "xx.jpg", description: "Elegant gowns crafted for special events, blending tradition and style." },
+    { name: "Handwoven Textiles", price: 800.00, image: "cc.jpg", description: "Traditional handwoven textiles made from fine fabrics, perfect for various uses." }
+];
+
+const heritageSites = [
+    { name: "Immaculate Conception Parish", image: "p.jpg", description: "A historic church showcasing colonial architecture and religious significance." },
+    { name: "Inang Filipina Shrine", image: "y.jpg", description: "Catholic shrine honoring the Virgin Mary as the mother of the Filipino people, known for its serene atmosphere and Marian devotion." },
+    { name: "Kakarong de Sili", image: "t.jpg", description: "Kakarong 1st District is known for its rich history and strong community, especially Kakarong de Sili’s role in the Philippine revolution." }
+];
+
+const tourismSpots = [
+    { name: "Amana Waterpark", image: "q.jpg", description: "Amana Waterpark is a popular resort known for its large wave pool, themed attractions, and spacious grounds—perfect for family outings and group getaways." },
+    { name: "Sitio Antonio Wavepool Resort", image: "r.jpg", description: "Sitio Antonio Water Park is a family-friendly destination with refreshing pools, fun water slides, and open spaces—ideal for a quick getaway and bonding with friends or family." },
+    { name: "La Camila Private Pool & Events Place", image: "j.jpg", description: "A cozy staycation spot offering a relaxing escape with comfortable rooms, modern amenities, and a calm atmosphere—perfect for unwinding without traveling far." }
+];
+
+let cart = [];
+let currentProductIndex = 0;
+let currentQuantity = 1;
+
+function openModal(index) {
+    currentProductIndex = index;
+    currentQuantity = 1;
+    const product = products[index];
+    document.getElementById('modal-image').style.backgroundImage = `url('${product.image}')`;
+    document.getElementById('modal-name').textContent = product.name;
+    document.getElementById('modal-description').textContent = product.description;
+    document.getElementById('quantity').textContent = currentQuantity;
+    document.getElementById('productModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('productModal').style.display = 'none';
+}
+
+function changeQuantity(change) {
+    currentQuantity += change;
+    if (currentQuantity < 1) currentQuantity = 1;
+    document.getElementById('quantity').textContent = currentQuantity;
+}
+
+function addToCart() {
+    const product = products[currentProductIndex];
+    const existingItem = cart.find(item => item.name === product.name);
+    if (existingItem) {
+        existingItem.quantity += currentQuantity;
+    } else {
+        cart.push({ name: product.name, price: product.price, quantity: currentQuantity });
+    }
+    updateCartCount();
+    closeModal();
+    alert(`${currentQuantity} ${product.name}(s) added to cart!`);
+}
+
+function updateCartCount() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('cart-count').textContent = totalItems;
+}
+
+function openHeritageModal(index) {
+    const site = heritageSites[index];
+    document.getElementById('heritage-modal-image').style.backgroundImage = `url('${site.image}')`;
+    document.getElementById('heritage-modal-name').textContent = site.name;
+    document.getElementById('heritage-modal-description').textContent = site.description;
+    document.getElementById('heritageModal').style.display = 'block';
+}
+
+function closeHeritageModal() {
+    document.getElementById('heritageModal').style.display = 'none';
+}
+
+function openTourismModal(index) {
+    const spot = tourismSpots[index];
+    document.getElementById('tourism-modal-image').style.backgroundImage = `url('${spot.image}')`;
+    document.getElementById('tourism-modal-name').textContent = spot.name;
+    document.getElementById('tourism-modal-description').textContent = spot.description;
+    document.getElementById('tourismModal').style.display = 'block';
+}
+
+function closeTourismModal() {
+    document.getElementById('tourismModal').style.display = 'none';
+}
+
+function openCart() {
+    const cartItemsDiv = document.getElementById('cart-items');
+    cartItemsDiv.innerHTML = '';
+
+    let total = 0;
+
+    if (cart.length === 0) {
+        cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+        document.getElementById('cart-total').textContent = '0.00';
+        document.getElementById('cartModal').style.display = 'block';
+        return;
+    }
+
+    cart.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-item';
+
+        itemDiv.innerHTML = `
+            <span>${item.name} (x${item.quantity})</span>
+            <span>₱${(item.price * item.quantity).toFixed(2)}</span>
+            <button onclick="removeFromCart(${index})" style="
+                background: none;
+                border: none;
+                color: red;
+                font-size: 18px;
+                cursor: pointer;
+            ">✖</button>
+        `;
+
+        cartItemsDiv.appendChild(itemDiv);
+        total += item.price * item.quantity;
+    });
+
+    document.getElementById('cart-total').textContent = total.toFixed(2);
+    document.getElementById('cartModal').style.display = 'block';
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartCount();
+    openCart();
+}
+
+function closeCart() {
+    document.getElementById('cartModal').style.display = 'none';
+}
+
+function checkout() {
+    alert('Checkout functionality would be implemented here. Total: ₱' + document.getElementById('cart-total').textContent);
+    closeCart();
+}
+
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const tabs = document.querySelectorAll('.tab');
+
+function changeSlide(index) {
+    currentSlide = index;
+    updateCarousel();
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateCarousel();
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateCarousel();
+}
+
+function updateCarousel() {
+    const carousel = document.getElementById('carousel');
+    carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+    tabs.forEach((tab, i) => {
+        tab.classList.toggle('active', i === currentSlide);
+    });
+}
+
+// Auto-slide every 5 seconds
+setInterval(() => {
+    nextSlide();
+}, 5000);
+
+// Smooth scroll for nav links
+document.querySelectorAll('nav a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        // Update active nav
+        document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+
+// Sitemap toggle with icon movement
+document.getElementById('sitemap-toggle').addEventListener('click', function () {
+    const sitemap = document.getElementById('sitemap');
+    const header = document.querySelector('header');
+    const body = document.body;
+    sitemap.classList.toggle('open');
+    body.classList.toggle('sitemap-open');
+    header.classList.toggle('sitemap-open');
+    // Adjust cart modal position if open
+    const cartModal = document.getElementById('cartModal');
+    if (cartModal.style.display === 'block') {
+        if (body.classList.contains('sitemap-open')) {
+            cartModal.style.left = window.innerWidth <= 768 ? '200px' : '250px';
+        } else {
+            cartModal.style.left = '0';
+        }
+    }
+    // Assuming the toggle button has an icon that moves (e.g., rotates or translates)
+    // Add CSS class for animation, e.g., this.classList.toggle('rotated');
+    // If there's a specific icon element, target it like: document.getElementById('sitemap-icon').classList.toggle('moved');
+});
+
+// AI toggle
+document.getElementById('ai-toggle').addEventListener('click', function () {
+    document.getElementById('ai-assistant').classList.toggle('open');
+});
+
+// Close AI Assistant
+function closeAI() {
+    document.getElementById('ai-assistant').classList.remove('open');
+}
+
+// AI Chat functionality
+document.getElementById('ai-send').addEventListener('click', function() {
+    const input = document.getElementById('ai-input');
+    const message = input.value.trim();
+    if (message) {
+        const chat = document.getElementById('ai-chat');
+        chat.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+        const response = getAIResponse(message);
+        chat.innerHTML += `<p><strong>Ace:</strong> ${response}</p>`;
+        input.value = '';
+        chat.scrollTop = chat.scrollHeight;
+    }
+});
+
+function getAIResponse(message) {
+    const lowerMessage = message.toLowerCase();
+    if (lowerMessage.includes('product')) {
+        return 'We have amazing local products like handwoven barongs and fresh chickens. Check out our products section!';
+    } else if (lowerMessage.includes('heritage')) {
+        return 'Explore Pandi\'s rich heritage, including the Immaculate Conception Parish and ancestral houses.';
+    } else if (lowerMessage.includes('tourism')) {
+        return 'Discover tourism spots like Amana Waterpark and Sitio Antonio Wavepool Resort.';
+    } else if (lowerMessage.includes('cart')) {
+        return 'Your cart has ' + cart.reduce((sum, item) => sum + item.quantity, 0) + ' items.';
+    } else {
+        return 'I\'m here to help with information about PanDelight. Ask me about products, heritage, or tourism!';
+    }
+}
+
+// Site-wide sitemap search
+const searchInput = document.getElementById('sitemap-search-input');
+const searchButton = document.getElementById('sitemap-search-button');
+
+const searchableElements = document.querySelectorAll(
+    'section, h1, h2, h3, p, .catalog-card, .heritage-card, .tourism-card'
+);
+
+function clearHighlights() {
+    document.querySelectorAll('.search-hit').forEach(el => {
+        el.classList.remove('search-hit');
+    });
+}
+
+function searchWebsite() {
+    const query = searchInput.value.toLowerCase().trim();
+    clearHighlights();
+
+    if (!query) return;
+
+    let firstMatch = null;
+
+    searchableElements.forEach(el => {
+        if (el.textContent.toLowerCase().includes(query)) {
+            el.classList.add('search-hit');
+
+            if (!firstMatch) {
+                firstMatch = el;
+            }
+        }
+    });
+
+    if (firstMatch) {
+        firstMatch.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+
+        // Close sitemap after successful search
+        document.getElementById('sitemap').classList.remove('open');
+        document.body.classList.remove('sitemap-open');
+        document.querySelector('header').classList.remove('sitemap-open');
+        // Reset cart modal position
+        const cartModal = document.getElementById('cartModal');
+        if (cartModal.style.display === 'block') {
+            cartModal.style.left = '0';
+        }
+    } else {
+        alert('No matching content found on the site.');
+    }
+}
+
+searchButton.addEventListener('click', searchWebsite);
+
+searchInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        searchWebsite();
+    }
+});
+
+    </script>
+</body>
+</html>
+	

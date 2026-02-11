@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cute Valentine's Love Fest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #ffe6f2, #ffb3d9, #e6f7ff);
+            color: #ff69b4;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        .sparkles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .sparkle {
+            position: absolute;
+            color: #ffd700;
+            font-size: 16px;
+            animation: sparkleFloat 4s linear infinite;
+            opacity: 0.8;
+        }
+        @keyframes sparkleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 50px 0;
+            animation: bounceIn 1s ease-out;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4em;
+            font-weight: 700;
+            color: #ff1493;
+            text-shadow: 3px 3px 6px rgba(255, 20, 147, 0.3);
+            margin-bottom: 10px;
+            animation: wiggle 2s ease-in-out infinite;
+        }
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+        .subtitle {
+            font-size: 1.4em;
+            color: #ffb6c1;
+            font-weight: 300;
+            animation: fadeInUp 1.5s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 80px 0;
+            flex-wrap: wrap;
+        }
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 50px;
+        }
+        .hero-text h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            color: #ff69b4;
+            margin-bottom: 20px;
+            animation: slideInLeft 1s ease-out;
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .hero-text p {
+            font-size: 1.3em;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #ff69b4;
+            animation: slideInLeft 1.2s ease-out;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 18px 35px;
+            background: linear-gradient(45deg, #ff69b4, #ffb6c1);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.2em;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.6);
+        }
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            animation: slideInRight 1s ease-out;
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+            transition: transform 0.3s ease;
+        }
+        .hero-image img:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+        .gallery {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .gallery h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            color: #ff1493;
+            margin-bottom: 40px;
+            animation: fadeInUp 1.5s ease-out;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.4);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: filter 0.3s ease;
+        }
+        .gallery-item:hover img {
+            filter: brightness(1.1) saturate(1.2);
+        }
+        .gallery-item .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(255, 105, 180, 0.9), rgba(255, 182, 193, 0.7));
+            color: white;
+            padding: 25px;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            border-radius: 0 0 20px 20px;
+        }
+        .gallery-item:hover .overlay {
+            transform: translateY(0);
+        }
+        .gallery-item .overlay p {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin: 0;
+        }
+        .game-section {
+            padding: 80px 0;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.2);
+        }
+        .game-section h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            color: #ff1493;
+            margin-bottom: 40px;
+            animation: fadeInUp 1.5s ease-out;
+        }
+        .game-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+        }
+        .grid {
+            display: inline-block;
+            margin: 20px auto;
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+            margin: 5px 0;
+        }
+        .cell {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #ff69b4;
+            margin: 0 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            background-color: white;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+        }
+        .cell.correct {
+            background: linear-gradient(45deg, #4caf50, #66bb6a);
+            color: white;
+            animation: bounce 0.5s;
+        }
+        .cell.present {
+            background: linear-gradient(45deg, #ff9800, #ffb74d);
+            color: white;
+            animation: shake 0.5s;
+        }
+        .cell.absent {
+            background: linear-gradient(45deg, #9e9e9e, #bdbdbd);
+            color: white;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .game-input {
+            padding: 12px;
+            font-size: 18px;
+            margin: 15px;
+            border: 2px solid #ff1493;
+            border-radius: 25px;
+            outline: none;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s;
+        }
+        .game-input:focus {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .game-button {
+            padding: 12px 25px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .game-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .prize {
+            margin-top: 20px;
+            font-size: 28px;
+            color: #ff1493;
+            cursor: pointer;
+            display: none;
+            animation: pulse 2s infinite;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .mail {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #fff, #ffe6f2);
+            border: 3px solid #ff1493;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: none;
+            max-width: 400px;
+            text-align: center;
+            animation: fadeIn 0.5s;
+            z-index: 1000;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -60%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+        .mail h2 {
+            color: #ff1493;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        .mail p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .mail .hearts {
+            font-size: 2em;
+            margin-top: 10px;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #ff1493;
+            background: #fff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .close:hover {
+            background: #ff1493;
+            color: #fff;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 999;
+        }
+        .mail-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 3em;
+            color: #ff1493;
+            cursor: pointer;
+            animation: float 3s ease-in-out infinite;
+            z-index: 1001;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .message {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .message::before {
+            content: '💕';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            font-size: 4em;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+        .message::after {
+            content: '💖';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            font-size: 4em;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        .message h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            color: #ff1493;
+            margin-bottom: 30px;
+            animation: fadeInUp 1.5s ease-out;
+        }
+        .message p {
+            font-size: 1.3em;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto 25px;
+            color: #ff69b4;
+            animation: typewriter 3s steps(40, end) 1s both;
+        }
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .heart {
+            position: absolute;
+            color: #ff1493;
+            font-size: 28px;
+            animation: heartFloat 6s linear infinite;
+            opacity: 0.7;
+            cursor: pointer;
+        }
+        .heart:hover {
+            animation-play-state: paused;
+            transform: scale(1.5);
+        }
+        @keyframes heartFloat {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #ffb6c1;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 20px 20px 0 0;
+            margin-top: 40px;
+        }
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-text {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+            h1 {
+                font-size: 3em;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+	    <div class="sparkles" id="sparkles"></div>
+    <div class="hearts" id="hearts"></div>
+    <div class="container">
+        <header>
+            <h1>💕 Cute Valentine's Love Fest 💕</h1>
+            <p class="subtitle">A Super Adorable Celebration of Our Sweet Love! 🌸</p>
+        </header>
+
+        <section class="hero">
+            <div class="hero-text">
+                <h2>Sweethearts Forever! 💖</h2>
+                <p>Oh my gosh, you make my heart go pitter-patter every single day! Your smile lights up my world like a thousand twinkling stars, and your hugs feel like the coziest blanket ever. I love you more than all the candies in the world! 🍬✨</p>
+                <a href="#message" class="cta-button">Read My Cuddly Message! 🥰</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Cute couple holding hands">
+            </div>
+        </section>
+
+        <section class="gallery">
+            <h2>Our Adorable Moments! 📸</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Starry night date">
+                    <div class="overlay">
+                        <p>Starry nights full of giggles and dreams! 🌟😊</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Candlelit dinner">
+                    <div class="overlay">
+                        <p>Candlelit dinners with lots of yummy treats! 🕯️🍰</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Romantic walk">
+                    <div class="overlay">
+                        <p>Hand-in-hand walks that make my heart flutter! 🐾💑</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="game-section">
+            <h2>Play Our Love Game! 🎮💕</h2>
+            <div class="game-container">
+                <p>Guess the 3-letter word of love! You have 6 tries. If you guess "YES", you win a special prize! 🌹</p>
+                <div class="grid" id="grid">
+                    <!-- Rows will be generated by JS -->
+                </div>
+                <input type="text" class="game-input" id="guess" maxlength="3" placeholder="Enter 3-letter word 💕">
+                <button class="game-button" onclick="submitGuess()">Submit Guess 💌</button>
+                <div class="prize" id="prize" onmouseover="showLetter()" onmouseout="hideLetter()">🎁 Your Prize! Hover to open. ✨</div>
+            </div>
+        </section>
+
+        <section class="message" id="message">
+            <h2>My Heart's Cuddly Confession! 💓</h2>
+            <p>Dearest cutie-pie, you're like a fluffy teddy bear that I never want to let go of! Every moment with you is filled with giggles, snuggles, and so much love that it makes my heart do happy dances. You're my best friend, my adventure buddy, and the sweetest person ever! I love your funny faces, your kind heart, and how you make even the yuckiest days super fun. You're my forever valentine, and I can't wait for more cuddles and kisses! 😘🥰</p>
+            <p>With all my squishy love and a million hugs,</p>
+            <p>Your Adorable Sweetheart 💕🌈</p>
+        </section>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="hideLetter()"></div>
+    <div class="mail" id="mail">
+        <span class="close" onclick="hideLetter()">×</span>
+        <h2>Happy Valentine's Day, My Love! 💕</h2>
+        <p>You've unlocked the key to my heart! "YES" means forever with you. Thank you for being amazing and for playing this little game. I cherish every moment with you. You're my everything! 🌟</p>
+        <p>With all my love, 💖</p>
+        <div class="hearts">❤️‍🔥💖💕💓💗</div>
+    </div>
+
+    <div class="mail-icon" id="mailIcon" onmouseover="showMail()" onmouseout="hideMail()">✉️</div>
+
+    <footer>
+        <p>💖 Made with tons of love and cuteness for you! 💖</p>
+    </footer>
+
+    <script>
+        const sparklesContainer = document.getElementById('sparkles');
+        const heartsContainer = document.getElementById('hearts');
+        const grid = document.getElementById('grid');
+        const guessInput = document.getElementById('guess');
+        const prize = document.getElementById('prize');
+        const mail = document.getElementById('mail');
+        const overlay = document.getElementById('overlay');
+        const mailIcon = document.getElementById('mailIcon');
+
+        const targetWord = "YES";
+        let currentRow = 0;
+        const maxRows = 6;
+
+        // Initialize grid
+        for (let i = 0; i < maxRows; i++) {
+            const row = document.createElement('div');
+            row.className = 'row';
+            for (let j = 0; j < 3; j++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                row.appendChild(cell);
+            }
+            grid.appendChild(row);
+        }
+
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = '✨';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            sparklesContainer.appendChild(sparkle);
+            setTimeout(() => {
+                sparkle.remove();
+            }, 4000);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '💖';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heartsContainer.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+
+        function submitGuess() {
+            const guess = guessInput.value.toUpperCase();
+            if (guess.length !== 3) {
+                alert("Please enter a 3-letter word. 💕");
+                return;
+            }
+            if (currentRow >= maxRows) {
+                alert("No more tries! Try again tomorrow? 💔");
+                return;
+            }
+
+            const row = grid.children[currentRow];
+            for (let i = 0; i < 3; i++) {
+                const cell = row.children[i];
+                cell.textContent = guess[i];
+                if (guess[i] === targetWord[i]) {
+                    cell.classList.add('correct');
+                } else if (targetWord.includes(guess[i])) {
+                    cell.classList.add('present');
+                } else {
+                    cell.classList.add('absent');
+                }
+            }
+
+            if (guess === targetWord) {
+                setTimeout(() => {
+                    alert("You win! You guessed YES correctly! 🎉");
+                    prize.style.display = 'block';
+                    for (let i = 0; i < 10; i++) {
+                        setTimeout(createHeart, i * 100);
+                    }
+                }, 500);
+            } else if (currentRow === maxRows - 1) {
+                alert("Game over! The word was YES. But don't worry, love is always a win! 💖");
+            }
+
+            currentRow++;
+            guessInput.value = '';
+        }
+
+        function showLetter() {
+            overlay.style.display = 'block';
+            mail.style.display = 'block';
+        }
+
+        function hideLetter() {
+            overlay.style.display = 'none';
+            mail.style.display = 'none';
+        }
+
+        function showMail() {
+            overlay.style.display = 'block';
+            mail.style.display = 'block';
+        }
+
+        function hideMail() {
+            overlay.style.display = 'none';
+            mail.style.display = 'none';
+        }
+
+        // Create sparkles and hearts periodically
+        setInterval(createSparkle, 800);
+        setInterval(createHeart, 1200);
+
+        // Smooth scrolling for CTA button
+        document.querySelector('.cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#message').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Add click interaction to hearts
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('heart')) {
+                e.target.style.animation = 'none';
+                e.target.style.transform = 'scale(2)';
+                setTimeout(() => {
+                    e.target.remove();
+                }, 500);
+            }
+        });
+
+        // Typewriter effect for message
+        const messageText = document.querySelector('.message p:first-of-type');
+        messageText.style.width = '0';
+        messageText.style.overflow = 'hidden';
+        messageText.style.whiteSpace = 'nowrap';
+        messageText.style.animation = 'typewriter 4s steps(60, end) 1s both';
+    </script>
+</body>
+</html>
